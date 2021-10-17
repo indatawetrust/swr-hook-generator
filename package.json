@@ -1,0 +1,43 @@
+{
+  "name": "swr-hook-generator",
+  "version": "0.1.0",
+  "description": "SWR hook generator",
+  "main": "index.js",
+  "bin": {
+    "swrhg": "bin/index.js"
+  },
+  "scripts": {
+    "setup-test": "node ./bin/index.js --output=fixtures/service.js --schema=fixtures/schema.graphql",
+    "test": "npm run setup-test && jest && rm fixtures/service.js"
+  },
+  "author": "indatawetrust",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^15.6.1",
+    "graphql-tag": "^2.12.5",
+    "lodash": "^4.17.21",
+    "yargs": "^17.2.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-async-to-generator": "^7.14.5",
+    "@babel/plugin-transform-regenerator": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "@babel/preset-react": "^7.14.5",
+    "@testing-library/react-hooks": "^7.0.2",
+    "babel-jest": "^27.2.5",
+    "execa": "^5.1.1",
+    "jest": "^27.2.5",
+    "react": "^16.14.0",
+    "react-test-renderer": "^16.14.0",
+    "swr": "^1.0.1"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [
+    "swr",
+    "hook",
+    "react"
+  ]
+}

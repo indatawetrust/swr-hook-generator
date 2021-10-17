@@ -1,0 +1,11 @@
+query getData {
+  datas {
+    id
+  }
+}
+
+mutation createData($name: String!) {
+  createData(name: $name) {
+    name
+  }
+}
