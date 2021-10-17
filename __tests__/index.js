@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { useGetData, useCreateData, STATUSES } from '../fixtures/service'
 
-jest.useFakeTimers();
+jest.useRealTimers();
 
 describe('hook tests', () => {
   test('#query - successful test', async () => {
@@ -22,7 +22,11 @@ describe('hook tests', () => {
   test('#query - failure test', async () => {
     const { result, waitFor } = renderHook(() => useGetData({
       action: () => {
-        throw new Error('big fail')
+        return new Promise((_resolve, reject) => {
+          setTimeout(() => {
+            reject(new Error('big fail'))
+          }, 100)
+        })
       },
       fallbackData: []
     }))
@@ -79,18 +83,22 @@ describe('hook tests', () => {
 
   test('#mutation - failure test', async () => {
     const { result, waitFor } = renderHook(() => useCreateData({
-      action: (name) => {
-        throw new Error('big fail')
+      action: (_name) => {
+        return new Promise((_resolve, reject) => {
+          setTimeout(() => {
+            reject(new Error('big fail'))
+          }, 100)
+        })
       },
       fallbackData: [],
       mutator: (prevState, nextState) => ([...prevState, ...nextState])
     }))
 
-    expect(result.current.status).toBe(STATUSES.LOADING)
-
     act(() => {
       result.current.mutate('ahmet')
     })
+
+    expect(result.current.status).toBe(STATUSES.LOADING)
   
     await waitFor(() => result.current.status === STATUSES.FAILED);
 
