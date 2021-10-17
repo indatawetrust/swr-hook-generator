@@ -11,6 +11,8 @@ describe('hook tests', () => {
       },
       fallbackData: []
     }))
+
+    expect(result.current.status).toBe(STATUSES.LOADING)
   
     await waitFor(() => result.current.status === STATUSES.SUCCEED);
   
@@ -29,6 +31,8 @@ describe('hook tests', () => {
       result.current.mutate()
     })
 
+    expect(result.current.status).toBe(STATUSES.LOADING)
+
     await waitFor(() => result.current.status === STATUSES.FAILED);
     
     expect(result.current.error).toStrictEqual(new Error('big fail'))
@@ -46,6 +50,27 @@ describe('hook tests', () => {
     act(() => {
       result.current.mutate('ahmet')
     })
+
+    expect(result.current.status).toBe(STATUSES.LOADING)
+  
+    await waitFor(() => result.current.status === STATUSES.SUCCEED);
+  
+    expect(result.current.data).toStrictEqual(['ahmet'])
+  })
+
+  test('#mutation - successful test (without mutator)', async () => {
+    const { result, waitFor } = renderHook(() => useCreateData({
+      action: (name) => {
+        return Promise.resolve([name])
+      },
+      fallbackData: [],
+    }))
+
+    act(() => {
+      result.current.mutate('ahmet')
+    })
+
+    expect(result.current.status).toBe(STATUSES.LOADING)
   
     await waitFor(() => result.current.status === STATUSES.SUCCEED);
   
@@ -60,6 +85,8 @@ describe('hook tests', () => {
       fallbackData: [],
       mutator: (prevState, nextState) => ([...prevState, ...nextState])
     }))
+
+    expect(result.current.status).toBe(STATUSES.LOADING)
 
     act(() => {
       result.current.mutate('ahmet')
