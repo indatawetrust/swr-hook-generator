@@ -12,7 +12,7 @@ describe('hook tests', () => {
       fallbackData: []
     }))
   
-    await waitFor(() => result.current.status === 4);
+    await waitFor(() => result.current.status === STATUSES.SUCCEED);
   
     expect(result.current.data).toStrictEqual([1,2,3])
   })
@@ -47,7 +47,7 @@ describe('hook tests', () => {
       result.current.mutate('ahmet')
     })
   
-    await waitFor(() => result.current.status === 4);
+    await waitFor(() => result.current.status === STATUSES.SUCCEED);
   
     expect(result.current.data).toStrictEqual(['ahmet'])
   })
