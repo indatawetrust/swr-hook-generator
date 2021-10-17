@@ -1,6 +1,6 @@
 {
   "name": "swr-hook-generator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "SWR hook generator",
   "main": "index.js",
   "bin": {
