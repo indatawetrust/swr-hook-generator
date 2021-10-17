@@ -39,5 +39,13 @@
     "swr",
     "hook",
     "react"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indatawetrust/swr-hook-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/indatawetrust/swr-hook-generator/issues"
+  },
+  "homepage": "https://github.com/indatawetrust/swr-hook-generator#readme"
 }
