@@ -11,19 +11,6 @@ const schemaGraphlCode = fs.readFileSync(schemaFile)
 
 let generatedCode = lib(schemaGraphlCode)
 
-generatedCode = `
-import useSWR from "swr";
-import { useState } from "react";
-
-export const STATUSES = {
-  INIT: 1,
-  LOADING: 2,
-  FAILED: 3,
-  SUCCEED: 4,
-}
-${generatedCode.replace(/\n$/, '')}
-`
-
 const outputFile = path.join(process.cwd(), argv.output || 'service.js')
 
 fs.writeFileSync(outputFile, generatedCode)
