@@ -9,8 +9,12 @@ describe('hook tests', () => {
       action: () => {
         return Promise.resolve([1,2,3])
       },
-      fallbackData: []
+      options: {
+        fallbackData: []
+      }
     }))
+
+    expect(result.current.data).toStrictEqual([])
 
     expect(result.current.status).toBe(STATUSES.LOADING)
   
@@ -25,15 +29,19 @@ describe('hook tests', () => {
         return new Promise((_resolve, reject) => {
           setTimeout(() => {
             reject(new Error('big fail'))
-          }, 100)
+          }, 500)
         })
       },
-      fallbackData: []
+      options: {
+        fallbackData: []
+      }
     }))
 
     act(() => {
-      result.current.mutate()
+      result.current.mutate([])
     })
+
+    expect(result.current.data).toStrictEqual([])
 
     expect(result.current.status).toBe(STATUSES.LOADING)
 
@@ -47,9 +55,11 @@ describe('hook tests', () => {
       action: (name) => {
         return Promise.resolve([name])
       },
-      fallbackData: [],
-      mutator: (prevState, nextState) => ([...prevState, ...nextState])
+      mutator: (prevState, nextState) => ([...prevState, ...nextState]),
+      options: { fallbackData: [] }
     }))
+
+    expect(result.current.data).toStrictEqual([])
 
     act(() => {
       result.current.mutate('ahmet')
@@ -67,8 +77,10 @@ describe('hook tests', () => {
       action: (name) => {
         return Promise.resolve([name])
       },
-      fallbackData: [],
+      options: { fallbackData: [] }
     }))
+
+    expect(result.current.data).toStrictEqual(['ahmet'])
 
     act(() => {
       result.current.mutate('ahmet')
@@ -90,9 +102,11 @@ describe('hook tests', () => {
           }, 100)
         })
       },
-      fallbackData: [],
-      mutator: (prevState, nextState) => ([...prevState, ...nextState])
+      mutator: (prevState, nextState) => ([...prevState, ...nextState]),
+      options: { fallbackData: [] }
     }))
+
+    expect(result.current.data).toStrictEqual(['ahmet'])
 
     act(() => {
       result.current.mutate('ahmet')
