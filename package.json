@@ -13,6 +13,7 @@
   "author": "indatawetrust",
   "license": "MIT",
   "dependencies": {
+    "constant-case": "^3.0.4",
     "graphql": "^15.6.1",
     "graphql-tag": "^2.12.5",
     "lodash": "^4.17.21",
