@@ -1,7 +1,15 @@
+import React from 'react'
 import { act, renderHook } from '@testing-library/react-hooks'
+import { SWRConfig } from 'swr'
 import { useGetData, useCreateData, STATUSES } from '../fixtures/service'
 
 jest.useRealTimers();
+
+const wrapper = ({ children }) => (
+  <SWRConfig value={{ provider: () => new Map() }}>
+    {children}
+  </SWRConfig>
+)
 
 describe('hook tests', () => {
   test('#query - successful test', async () => {
@@ -12,7 +20,7 @@ describe('hook tests', () => {
       options: {
         fallbackData: []
       }
-    }))
+    }), { wrapper })
 
     expect(result.current.data).toStrictEqual([])
 
@@ -35,7 +43,7 @@ describe('hook tests', () => {
       options: {
         fallbackData: []
       }
-    }))
+    }), { wrapper })
 
     act(() => {
       result.current.mutate([])
@@ -57,7 +65,7 @@ describe('hook tests', () => {
       },
       mutator: (prevState, nextState) => ([...prevState, ...nextState]),
       options: { fallbackData: [] }
-    }))
+    }), { wrapper })
 
     expect(result.current.data).toStrictEqual([])
 
@@ -78,9 +86,9 @@ describe('hook tests', () => {
         return Promise.resolve([name])
       },
       options: { fallbackData: [] }
-    }))
+    }), { wrapper })
 
-    expect(result.current.data).toStrictEqual(['ahmet'])
+    expect(result.current.data).toStrictEqual([])
 
     act(() => {
       result.current.mutate('ahmet')
@@ -104,9 +112,9 @@ describe('hook tests', () => {
       },
       mutator: (prevState, nextState) => ([...prevState, ...nextState]),
       options: { fallbackData: [] }
-    }))
+    }), { wrapper })
 
-    expect(result.current.data).toStrictEqual(['ahmet'])
+    expect(result.current.data).toStrictEqual([])
 
     act(() => {
       result.current.mutate('ahmet')
